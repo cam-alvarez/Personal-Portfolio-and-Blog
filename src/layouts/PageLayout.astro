@@ -16,12 +16,16 @@ const { metadata } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
-  <slot name="announcement">
-    <Announcement />
-  </slot>
+
   <slot name="header">
-    <Header {...headerData} isSticky showRssFeed showToggleTheme />
-  </slot>
+    <Header
+      links={[
+        { text: 'About', href: '/#hero' },
+        { text: 'Resume', href: '/#resume' },
+        { text: 'Portfolio', href: '/#portfolio' },
+        { text: 'Blog', href: '/blog' },
+        { text: 'Github', href: 'https://github.com/cam-alvarez' },
+      ]}/>  </slot>
   <main>
     <slot />
   </main>
