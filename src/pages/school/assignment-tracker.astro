@@ -1,0 +1,102 @@
+---
+import Layout from '~/layouts/PageLayout.astro'
+---
+
+<Layout>
+  <style>
+    /* Existing styles */
+    .back-button {
+      text-align: left;
+      margin-top: 20px;
+    }
+    .back-button a {
+      text-decoration: none;
+      color: #007bff;
+    }
+    .back-button a:hover {
+      text-decoration: underline;
+    }
+    .center-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .spacer {
+      margin-top: 30px;
+    }
+    button {
+      border: 2px solid #007bff;
+      padding: 10px 20px;
+      background-color: #f1f1f1;
+      color: #333;
+      border-radius: 12px;
+    }
+    h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    input {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    #assignments {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+  </style>
+  <div class="content-container">
+    <section>
+      <div class="center-content">
+        <div class="back-button">
+          <a href="/school">&#8592; Back to Web Tools Index</a>
+        </div>
+        <div class="spacer"></div>
+        <h2>Assignment Tracker</h2>
+        <div>
+          <label for="assignmentName">Assignment:</label>
+          <input type="text" id="assignmentName" placeholder="e.g. Math Homework">
+          <label for="dueDate">Due Date:</label>
+          <input type="date" id="dueDate">
+          <label for="dueTime">Due Time:</label>
+          <input type="time" id="dueTime">
+        </div>
+        <button id="addButton">Add Assignment</button>
+        <div id="assignments"></div>
+      </div>
+    </section>
+  </div>
+  <script client:load>
+    document.addEventListener("DOMContentLoaded", function() {
+      const addButton = document.getElementById('addButton');
+
+      addButton.addEventListener('click', function() {
+        const assignmentName = document.getElementById('assignmentName').value;
+        const dueDate = document.getElementById('dueDate').value;
+        const dueTime = document.getElementById('dueTime').value;
+
+        if (!assignmentName || !dueDate || !dueTime) {
+          alert('Please fill in all fields.');
+          return;
+        }
+
+        const assignmentList = document.getElementById('assignments');
+        const assignmentDiv = document.createElement('div');
+        assignmentDiv.innerHTML = `
+          <input type="checkbox">
+          <span>${assignmentName} (Due: ${dueDate} at ${dueTime})</span>
+        `;
+
+        assignmentList.appendChild(assignmentDiv);
+
+        // Clear the input fields after adding the assignment
+        document.getElementById('assignmentName').value = '';
+        document.getElementById('dueDate').value = '';
+        document.getElementById('dueTime').value = '';
+      });
+    });
+  </script>
+</Layout>
