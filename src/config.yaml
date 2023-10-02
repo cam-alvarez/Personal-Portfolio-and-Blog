@@ -10,7 +10,7 @@ site:
 metadata:
   title:
     default: cam-portfolio-blog
-    template: '%s — AstroWind'
+#    template: '%s — AstroWind'
   description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
   robots:
     index: true
