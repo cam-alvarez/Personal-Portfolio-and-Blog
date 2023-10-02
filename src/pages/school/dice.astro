@@ -1,0 +1,125 @@
+---
+import Layout from '~/layouts/PageLayout.astro'
+---
+
+<Layout>
+  <style>
+    /* Existing styles */
+    .back-button {
+      text-align: left;
+      margin-top: 20px;
+    }
+    .back-button a {
+      text-decoration: none;
+      color: #007bff;
+    }
+    .back-button a:hover {
+      text-decoration: underline;
+    }
+    .center-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .spacer {
+      margin-top: 30px;
+    }
+    /* Button style from the picker tool */
+    button {
+      border: 2px solid #007bff;
+      padding: 10px 20px;
+      background-color: #f1f1f1;
+      color: #333;
+      border-radius: 12px;
+      margin-top: 20px; /* Space between the button and the dice animation */
+    }
+    /* New styles for the dice */
+    .dot {
+      fill: white;
+      r: 5;  /* radius of each dot */
+    }
+    #diceBackground {
+      fill: red;  /* Initial color */
+    }
+    /* Additional spacing */
+    h2 {
+      margin-bottom: 30px; /* Space between title and dice animation */
+    }
+    svg {
+      margin-bottom: 30px; /* Space between dice animation and button */
+    }
+    button {
+      margin-bottom: 30px; /* Space between button and footer */
+    }
+  </style>
+
+  <div class="content-container">
+    <section>
+      <div class="center-content">
+        <div class="back-button">
+          <a href="/school">&#8592; Back to Web Tools Index</a>
+        </div>
+        <div class="spacer"></div>
+        <h2>Random Dice System</h2>
+        <svg id="diceSVG" width="100" height="100" viewBox="0 0 100 100">
+          <!-- Background for the dice -->
+          <rect id="diceBackground" width="100" height="100" rx="10" ry="10"></rect>
+          <!-- This SVG will have circles (dots) added to it based on the dice roll -->
+        </svg>
+        <!-- Moved the button below the dice animation -->
+        <button id="rollButton">Roll the Dice</button>
+      </div>
+    </section>
+  </div>
+
+  <script client:load>
+    let lastColor = null;
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const rollButton = document.getElementById('rollButton');
+
+      rollButton.addEventListener('click', function() {
+        var diceValue = Math.floor(Math.random() * 6) + 1;
+
+        // Clear previous dots (but not the background)
+        var circles = document.querySelectorAll('.dot');
+        circles.forEach(circle => circle.remove());
+
+        // Define positions for the dots based on dice faces
+        const dotPositions = {
+          1: [[50, 50]],
+          2: [[25, 25], [75, 75]],
+          3: [[25, 25], [50, 50], [75, 75]],
+          4: [[25, 25], [25, 75], [75, 25], [75, 75]],
+          5: [[25, 25], [25, 75], [50, 50], [75, 25], [75, 75]],
+          6: [[25, 25], [25, 50], [25, 75], [75, 25], [75, 50], [75, 75]],
+        };
+
+        // Add dots to the SVG based on the dice roll
+        dotPositions[diceValue].forEach(pos => {
+          var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          circle.setAttribute("cx", pos[0]);
+          circle.setAttribute("cy", pos[1]);
+          circle.setAttribute("r", 5);
+          circle.setAttribute("class", "dot");
+          document.getElementById('diceSVG').appendChild(circle);
+        });
+
+        // Change the background color for visual indication of a new roll
+        const colors = ["red", "green", "blue", "yellow", "purple", "orange", "pink", "cyan"];
+
+        if (lastColor) {
+          const index = colors.indexOf(lastColor);
+          if (index > -1) {
+            colors.splice(index, 1);
+          }
+        }
+
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        const diceBackground = document.getElementById('diceBackground');
+        diceBackground.style.fill = randomColor;
+        lastColor = randomColor;
+      });
+    });
+  </script>
+</Layout>

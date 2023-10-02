@@ -1,0 +1,84 @@
+---
+import Layout from '~/layouts/PageLayout.astro'
+---
+
+<Layout>
+  <style>
+    /* Center-align the content and add styling */
+    section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 50vh;
+      border: 2px solid #007bff; /* Add a border with blue color */
+      border-radius: 10px; /* Rounded corners */
+      padding: 20px; /* Add padding for spacing */
+    }
+
+    h1 {
+      font-size: 28px; /* Slightly bigger font size */
+      font-weight: bold; /* Bold text */
+      margin-bottom: 20px; /* Increased bottom margin for spacing */
+      text-decoration: underline; /* Underline text */
+    }
+
+    .demos {
+      display: flex; /* Use flexbox */
+      justify-content: center; /* Center the demos horizontally */
+      gap: 100px; /* Increase the spacing between the demos */
+    }
+
+
+
+    h2 {
+      font-size: 20px; /* Font size for subsections */
+      margin: 10px 0; /* Adjust the top and bottom margin as needed */
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      text-align: left; /* Left-align the list items */
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007bff; /* Blue color, you can change this */
+      font-weight: bold;
+    }
+    
+  </style>
+
+  <section>
+    <h1>Welcome to Web Tools</h1>
+
+    <div class="demos">
+      <div class="demo-group">
+        <h2>In-Class Demos</h2>
+        <ul>
+          <li><a href="/school/coin-flip">Coin Flip Tool</a></li>
+          <li><a href="/school/picker">Picker Tool</a></li>
+          <li><a href="/school/calendar">Calendar Tool</a></li>
+          <li><a href="/school/to-do">To-Do List Tool</a></li>
+          <li><a href="/school/trash">Trash Tool</a></li>
+          <li><a href="/school/dice">Dice Roll Tool</a></li>
+          <li><a href="/school/countdown">Countdown Timer Tool</a></li>
+        </ul>
+      </div>
+
+      <div class="demo-group">
+        <h2>Personal Demos</h2>
+        <ul>
+          <li><a href="#">Demo 1 (Replace me)</a></li>
+          <li><a href="#">Demo 2 (Replace me)</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</Layout>

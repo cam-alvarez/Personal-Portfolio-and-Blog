@@ -1,0 +1,109 @@
+---
+import Layout from '~/layouts/PageLayout.astro'
+---
+
+<Layout>
+  <style>
+    /* Existing styles */
+    .back-button {
+      text-align: left;
+      margin-top: 20px;
+    }
+    .back-button a {
+      text-decoration: none;
+      color: #007bff;
+    }
+    .back-button a:hover {
+      text-decoration: underline;
+    }
+    .center-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .spacer {
+      margin-top: 30px;
+    }
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    #reminder {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+
+    #reminder {
+      font-size: 3em;
+      background: -webkit-linear-gradient(#eee, #333);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-top: 20px;
+    }
+
+    .neon {
+      text-shadow: 0 0 5px #ff4da6, 0 0 15px #ff4da6, 0 0 20px #ff4da6, 0 0 25px #ff4da6, 0 0 30px #ff4da6, 0 0 35px #ff4da6;
+    }
+
+    .grayed {
+      text-shadow: none;
+      background: -webkit-linear-gradient(#888, #444);
+    }
+  </style>
+
+  <div class="content-container">
+    <section>
+      <div class="center-content">
+        <div class="back-button">
+          <a href="/school">&#8592; Back to Web Tools Index</a>
+        </div>
+        <div class="spacer"></div>
+        <h2>Trash Night Reminder</h2>
+        <div id="checkboxes">
+          <label><input type="checkbox" value="0"> Sunday</label>
+          <label><input type="checkbox" value="1"> Monday</label>
+          <label><input type="checkbox" value="2"> Tuesday</label>
+          <label><input type="checkbox" value="3"> Wednesday</label>
+          <label><input type="checkbox" value="4"> Thursday</label>
+          <label><input type="checkbox" value="5"> Friday</label>
+          <label><input type="checkbox" value="6"> Saturday</label>
+        </div>
+        <div id="reminder"></div>
+      </div>
+    </section>
+  </div>
+
+  <script >
+    document.addEventListener("DOMContentLoaded", function() {
+      // Initial check
+      updateReminder();
+
+      // Update the reminder whenever a checkbox is changed
+      document.getElementById("checkboxes").addEventListener("change", updateReminder);
+    });
+
+    function updateReminder() {
+      const reminderElement = document.getElementById("reminder");
+      const checkboxes = document.querySelectorAll("#checkboxes input[type='checkbox']");
+      const currentDate = new Date();
+      const currentDay = currentDate.getDay();
+
+      let isTrashNight = false;
+      checkboxes.forEach(checkbox => {
+        if (checkbox.checked && parseInt(checkbox.value) === currentDay) {
+          isTrashNight = true;
+        }
+      });
+
+      if (isTrashNight) {
+        reminderElement.textContent = "Trash Night";
+        reminderElement.classList.add("neon");
+        reminderElement.classList.remove("grayed");
+      } else {
+        reminderElement.textContent = "Not Trash Night";
+        reminderElement.classList.add("grayed");
+        reminderElement.classList.remove("neon");
+      }
+    }
+  </script>
+</Layout>
