@@ -445,6 +445,31 @@ const metadata = {
   <!--/>-->
 
   <!-- BlogLatestPost Widget **************** -->
+  <!-- HTML -->
+  <div id="scrollToTopBtn" class="fixed rounded-full border-amber-50 border-2 bottom-6 right-8 z-10 hidden">
+    <a href="#" title="Scroll to Top">
+      <button class="p-2 -rotate-90 rounded-full w-12 h-12 flex items-center justify-center">
+        →
+      </button>
+    </a>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Function to toggle the visibility of the button
+    function toggleScrollToTopBtn() {
+      const btn = document.getElementById("scrollToTopBtn");
+      if (window.pageYOffset > 200) {
+        btn.classList.remove("hidden");
+      } else {
+        btn.classList.add("hidden");
+      }
+    }
+
+    // Listen for scroll events
+    window.addEventListener("scroll", toggleScrollToTopBtn);
+  </script>
+
 
   <BlogLatestPosts
     id="blog"
