@@ -1,13 +1,30 @@
 ---
-
+import Layout from '~/layouts/PageLayout.astro'
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-Do List</title>
+
+<Layout>
   <style>
+    /* Existing styles */
+    .back-button {
+      text-align: left;
+      margin-top: 20px;
+    }
+    .back-button a {
+      text-decoration: none;
+      color: #007bff;
+    }
+    .back-button a:hover {
+      text-decoration: underline;
+    }
+    .center-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .spacer {
+      margin-top: 30px;
+    }
+    /* To-Do List styles */
     .light {
       margin-right: 10px;
       cursor: pointer;
@@ -17,54 +34,70 @@
       cursor: pointer;
     }
   </style>
-</head>
-<body>
+  <div class="content-container">
+    <section>
+      <div class="center-content">
+        <div class="back-button">
+          <a href="/school">&#8592; Back to Web Tools Index</a>
+        </div>
+        <div class="spacer"></div>
+        <h2>To-Do List</h2>
+        <div>
+          <input class="text-black" type="text" id="task-input" placeholder="Enter a task">
+          <button id="addTaskButton">Add Task</button>
+        </div>
+        <ul id="todo-list">
+          <!-- Tasks will be added here -->
+        </ul>
+      </div>
+    </section>
+  </div>
+  <script type="module">
+    document.addEventListener("DOMContentLoaded", function() {
+      const addTaskButton = document.getElementById('addTaskButton');
 
-<div>
-  <input type="text" id="task-input" placeholder="Enter a task">
-  <button onclick="addTask()">Add Task</button>
-</div>
-<ul id="todo-list">
-  <!-- Tasks will be added here -->
-</ul>
+      addTaskButton.addEventListener('click', function() {
+        const taskInput = document.getElementById('task-input');
+        const taskValue = taskInput.value.trim();
 
-<script>
-  function addTask() {
-    const taskInput = document.getElementById('task-input');
-    const taskValue = taskInput.value.trim();
+        if (taskValue) {
+          const taskItem = document.createElement('li');
 
-    if (taskValue) {
-      const taskItem = document.createElement('li');
+          taskItem.innerHTML = `<div class="flex gap-2 items-center">
+            <svg width="20" height="20" class="light red" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="15" fill="#FF0000"/>
+            </svg>
+            ${taskValue}
+            <span class="delete-btn" onclick="deleteTask(this)">❌</span></div>
+          `;
 
-      taskItem.innerHTML = `
-                <svg width="20" height="20" class="light red" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="16" cy="16" r="15" fill="#FF0000"/>
-                </svg>
-                ${taskValue}
-                <span class="delete-btn" onclick="deleteTask(this)">❌</span>
-            `;
+          // Attach delete event listener
+          taskItem.querySelector('.delete-btn').addEventListener('click', function() {
+            taskItem.parentNode.removeChild(taskItem);
+          });
 
-      document.getElementById('todo-list').appendChild(taskItem);
-      taskInput.value = ''; // Clear input
-    }
-  }
+          document.getElementById('todo-list').appendChild(taskItem);
+          taskInput.value = ''; // Clear input
+          document.getElementById('todo-list').appendChild(taskItem);
+          taskInput.value = ''; // Clear input
+        }
+      });
 
-  function deleteTask(deleteBtn) {
-    const taskItem = deleteBtn.parentElement;
-    taskItem.parentNode.removeChild(taskItem);
-  }
-
-  document.getElementById('todo-list').addEventListener('click', function(e) {
-    if (e.target && e.target.tagName === 'circle') {
-      const circle = e.target;
-      if (circle.getAttribute('fill') === '#FF0000') {
-        circle.setAttribute('fill', '#00FF00');
-      } else if (circle.getAttribute('fill') === '#00FF00') {
-        circle.setAttribute('fill', '#FF0000');
+      function deleteTask(deleteBtn) {
+        const taskItem = deleteBtn.parentElement;
+        taskItem.parentNode.removeChild(taskItem);
       }
-    }
-  });
-</script>
 
-</body>
-</html>
+      document.getElementById('todo-list').addEventListener('click', function(e) {
+        if (e.target && e.target.tagName === 'circle') {
+          const circle = e.target;
+          if (circle.getAttribute('fill') === '#FF0000') {
+            circle.setAttribute('fill', '#00FF00');
+          } else if (circle.getAttribute('fill') === '#00FF00') {
+            circle.setAttribute('fill', '#FF0000');
+          }
+        }
+      });
+    });
+  </script>
+</Layout>
