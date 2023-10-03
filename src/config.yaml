@@ -16,7 +16,7 @@ metadata:
     index: true
     follow: true
   openGraph:
-    site_name: AstroWind
+    site_name: Cam's Portfolio & Blog
     images:
       - url: '~/assets/images/websitepic.png'
         width: 1200
